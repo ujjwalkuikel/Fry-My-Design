@@ -1,13 +1,13 @@
-// ✅ no "use client"
-// Make sure the file exists at src/components/ProblemClientPage.tsx or correct the import path if necessary
+// app/problems/[id]/page.tsx
 import ProblemClientPage from "@/components/ProblemClientPage";
 
-interface PageProps {
-  params: {
+type Props = {
+  params: Promise<{
     id: string;
-  };
-}
+  }>;
+};
 
-export default function ProblemDetailPage({ params }: PageProps) {
-  return <ProblemClientPage id={params.id} />;
+export default async function Page({ params }: Props) {
+  const { id } = await params;
+  return <ProblemClientPage id={id} />;
 }

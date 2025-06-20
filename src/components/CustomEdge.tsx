@@ -4,17 +4,20 @@ import {
   BaseEdge,
   getBezierPath,
   getStraightPath,
-  getSimpleBezierPath,
   getSmoothStepPath,
   EdgeLabelRenderer,
   EdgeProps,
+  Edge,
 } from "reactflow";
 import { useState } from "react";
 
+interface CustomEdgeData {
+  setEdges?: (updater: (edges: Edge[]) => Edge[]) => void;
+  curveType?: string;
+}
+
 interface CustomEdgeProps extends EdgeProps {
-  data?: {
-    curveType?: string;
-  };
+  data?: CustomEdgeData;
 }
 
 const CustomEdge = ({
@@ -38,10 +41,8 @@ const CustomEdge = ({
     [edgePath] = getStraightPath({
       sourceX,
       sourceY,
-      sourcePosition,
       targetX,
       targetY,
-      targetPosition,
     });
   } else if (curveType === "smoothstep") {
     [edgePath] = getSmoothStepPath({
@@ -72,6 +73,10 @@ const CustomEdge = ({
     }
   };
 
+  // Calculate the midpoint for the delete button
+  const midX = (sourceX + targetX) / 2;
+  const midY = (sourceY + targetY) / 2;
+
   return (
     <>
       <BaseEdge
@@ -82,7 +87,6 @@ const CustomEdge = ({
           ...style,
           strokeWidth: 2,
           stroke: style.stroke || "#94a3b8",
-          animation: style.animated ? "flow 1s linear infinite" : undefined,
         }}
       />
 
@@ -90,7 +94,7 @@ const CustomEdge = ({
         <div
           className="absolute z-10 w-6 h-6 transform -translate-x-1/2 -translate-y-1/2 pointer-events-auto"
           style={{
-            transform: `translate(-50%, -50%) translate(${sourceX}px, ${sourceY}px)`,
+            transform: `translate(-50%, -50%) translate(${midX}px, ${midY}px)`,
           }}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
@@ -99,7 +103,7 @@ const CustomEdge = ({
             <div
               onClick={handleDelete}
               title="Delete edge"
-              className="w-5 h-5 text-xs flex items-center justify-center cursor-pointer rounded-full bg-white border border-gray-300 shadow-sm"
+              className="w-5 h-5 text-xs flex items-center justify-center cursor-pointer rounded-full bg-white border border-gray-300 shadow-sm hover:bg-red-50"
             >
               ❌
             </div>

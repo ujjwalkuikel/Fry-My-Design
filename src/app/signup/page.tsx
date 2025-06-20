@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import Link from "next/link";
 import {
   createUserWithEmailAndPassword,
@@ -13,12 +13,12 @@ export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleEmailSignup = async (e) => {
+  const handleEmailSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       console.log("Signed up successfully");
-    } catch (err) {
+    } catch (err: any) {
       console.error(err.message);
     }
   };
@@ -28,7 +28,7 @@ export default function SignUpPage() {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
       console.log("Logged in with Google");
-    } catch (err) {
+    } catch (err: any) {
       console.error(err.message);
     }
   };

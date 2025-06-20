@@ -1,9 +1,34 @@
 "use client";
 
 import { useState } from "react";
-import { Handle } from "reactflow";
+import { Handle, Position, NodeProps, Node, Edge } from "reactflow";
 
-const CustomNode = ({ id, data, selected, setNodes, setEdges }) => {
+// Define the data type for your custom node
+interface CustomNodeData {
+  label: string;
+  icon: string;
+  setNodes: (
+    updater: (nodes: Node<CustomNodeData>[]) => Node<CustomNodeData>[]
+  ) => void;
+  setEdges: (updater: (edges: Edge[]) => Edge[]) => void;
+  connectedHandles?: {
+    top?: boolean;
+    bottom?: boolean;
+    left?: boolean;
+    right?: boolean;
+  };
+  isSelected?: boolean;
+}
+
+// Type the props for the CustomNode component
+interface CustomNodeProps extends NodeProps<CustomNodeData> {
+  setNodes: (
+    updater: (nodes: Node<CustomNodeData>[]) => Node<CustomNodeData>[]
+  ) => void;
+  setEdges: (updater: (edges: Edge[]) => Edge[]) => void;
+}
+
+const CustomNode = ({ id, data, selected }: CustomNodeProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [tempLabel, setTempLabel] = useState(data.label);
@@ -78,7 +103,7 @@ const CustomNode = ({ id, data, selected, setNodes, setEdges }) => {
       {/* Handles */}
       <Handle
         type="source"
-        position="right"
+        position={Position.Right}
         id="right"
         style={{
           background: data.connectedHandles?.right ? "#000" : "#eee",
@@ -90,7 +115,7 @@ const CustomNode = ({ id, data, selected, setNodes, setEdges }) => {
       />
       <Handle
         type="target"
-        position="left"
+        position={Position.Left}
         id="left"
         style={{
           background: data.connectedHandles?.left ? "#000" : "#eee",
@@ -102,7 +127,7 @@ const CustomNode = ({ id, data, selected, setNodes, setEdges }) => {
       />
       <Handle
         type="source"
-        position="top"
+        position={Position.Top}
         id="top"
         style={{
           background: data.connectedHandles?.top ? "#000" : "#eee",
@@ -114,7 +139,7 @@ const CustomNode = ({ id, data, selected, setNodes, setEdges }) => {
       />
       <Handle
         type="target"
-        position="bottom"
+        position={Position.Bottom}
         id="bottom"
         style={{
           background: data.connectedHandles?.bottom ? "#000" : "#eee",

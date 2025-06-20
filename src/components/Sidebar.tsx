@@ -2,7 +2,27 @@
 
 import React from "react";
 
-const components = [
+interface Component {
+  label: string;
+  icon: string;
+}
+
+interface EdgeStyle {
+  type: string;
+  animated: boolean;
+  directed: boolean;
+  stroke: string;
+}
+
+interface SidebarProps {
+  onAddNode: (label: string, icon: string) => void;
+  edgeStyle: EdgeStyle;
+  setEdgeStyle: React.Dispatch<React.SetStateAction<EdgeStyle>>;
+  layoutMode: string;
+  setLayoutMode: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const components: Component[] = [
   { label: "Browser", icon: "browser-chrome.svg" },
   { label: "browser", icon: "browser.svg" },
   { label: "cache", icon: "cache.svg" },
@@ -13,7 +33,7 @@ const components = [
   { label: "server", icon: "server.svg" },
 ];
 
-const Sidebar = ({
+const Sidebar: React.FC<SidebarProps> = ({
   onAddNode,
   edgeStyle,
   setEdgeStyle,

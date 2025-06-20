@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import {
   signInWithEmailAndPassword,
@@ -16,12 +16,12 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleEmailLogin = async (e) => {
+  const handleEmailLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/canvas");
-    } catch (err) {
+    } catch (err: any) {
       console.error(err.message);
     }
   };
@@ -31,7 +31,7 @@ export default function LoginPage() {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
       router.push("/canvas");
-    } catch (err) {
+    } catch (err: any) {
       console.error(err.message);
     }
   };
@@ -83,7 +83,7 @@ export default function LoginPage() {
         </form>
 
         <p className="text-sm text-gray-500 dark:text-gray-400 text-center mt-6">
-          Don’t have an account?{" "}
+          Don't have an account?{" "}
           <Link href="/signup" className="text-lime-500 hover:underline">
             Sign up here
           </Link>

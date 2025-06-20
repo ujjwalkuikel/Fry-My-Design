@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ReactFlow, {
   Edge,
+  Node,
   Controls,
   Background,
   MiniMap,
@@ -12,6 +13,9 @@ import ReactFlow, {
   addEdge,
   Panel,
   ReactFlowProvider,
+  OnSelectionChangeParams,
+  NodeProps,
+  MarkerType,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import CustomNode from "./customNode";
@@ -19,26 +23,51 @@ import CustomEdge from "./CustomEdge";
 import Sidebar from "./Sidebar";
 import Submit from "./Submit";
 
+// Define custom node data type
+interface CustomNodeData {
+  label: string;
+  icon: string;
+  setNodes: (
+    updater: (nodes: Node<CustomNodeData>[]) => Node<CustomNodeData>[]
+  ) => void;
+  setEdges: (updater: (edges: Edge[]) => Edge[]) => void;
+  connectedHandles?: {
+    top?: boolean;
+    bottom?: boolean;
+    left?: boolean;
+    right?: boolean;
+  };
+  isSelected?: boolean;
+}
+
+// Define edge style type
+interface EdgeStyle {
+  animated: boolean;
+  directed: boolean;
+  stroke: string;
+  type: string;
+}
+
 // Inner component that uses ReactFlow hooks
 const FlowCanvas = () => {
   const canvasRef = useRef<HTMLDivElement>(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<CustomNodeData>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [selectedElements, setSelectedElements] = useState<{
     nodes: string[];
     edges: string[];
   }>({ nodes: [], edges: [] });
 
   // Edge styling options
-  const [edgeStyle, setEdgeStyle] = useState({
+  const [edgeStyle, setEdgeStyle] = useState<EdgeStyle>({
     animated: true,
     directed: true,
     stroke: "#000000",
     type: "default",
   });
 
-  const [layoutMode, setLayoutMode] = useState("default");
-  const [isLoading, setIsLoading] = useState(false);
+  const [layoutMode, setLayoutMode] = useState<string>("default");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Update connected handles when edges change
   useEffect(() => {
@@ -79,12 +108,12 @@ const FlowCanvas = () => {
         };
       })
     );
-  }, [edges, selectedElements]);
+  }, [edges, selectedElements, setNodes, setEdges]);
 
   // Node and edge type configs
   const nodeTypes = useMemo(
     () => ({
-      custom: (props) => (
+      custom: (props: NodeProps<CustomNodeData>) => (
         <CustomNode {...props} setNodes={setNodes} setEdges={setEdges} />
       ),
     }),
@@ -96,9 +125,15 @@ const FlowCanvas = () => {
   // Handle edge connection
   const onConnect = useCallback(
     (connection: Connection) => {
-      const edge = {
-        ...connection,
+      // Ensure source and target are not null
+      if (!connection.source || !connection.target) {
+        return;
+      }
+
+      const edge: Edge = {
         id: `e-${connection.source}-${connection.target}-${Date.now()}`,
+        source: connection.source,
+        target: connection.target,
         type: "custom",
         animated: edgeStyle.animated,
         style: { stroke: edgeStyle.stroke },
@@ -106,7 +141,7 @@ const FlowCanvas = () => {
         targetHandle: connection.targetHandle || "left",
         markerEnd: edgeStyle.directed
           ? {
-              type: "arrowclosed",
+              type: MarkerType.ArrowClosed,
               width: 10,
               height: 10,
             }
@@ -132,7 +167,7 @@ const FlowCanvas = () => {
       }));
 
       // Generate a position that doesn't overlap with existing nodes
-      let position;
+      let position: { x: number; y: number };
       let attempts = 0;
       const nodeWidth = 150; // approximate node width
       const nodeHeight = 80; // approximate node height
@@ -154,7 +189,7 @@ const FlowCanvas = () => {
         attempts++;
       } while (attempts < 10);
 
-      const newNode = {
+      const newNode: Node<CustomNodeData> = {
         id,
         type: "custom",
         position,
@@ -171,8 +206,8 @@ const FlowCanvas = () => {
 
       // After adding node, we can use the fitView function from the instance
       setTimeout(() => {
-        const reactFlowInstance =
-          document.querySelector(".react-flow")?.reactFlowInstance;
+        const reactFlowInstance = (document.querySelector(".react-flow") as any)
+          ?.reactFlowInstance;
         if (
           reactFlowInstance &&
           typeof reactFlowInstance.fitView === "function"
@@ -181,20 +216,23 @@ const FlowCanvas = () => {
         }
       }, 50);
     },
-    [nodes, setNodes]
+    [nodes, setNodes, setEdges]
   );
 
   // Handle selection changes
-  const onSelectionChange = useCallback(({ nodes, edges }) => {
-    setSelectedElements({
-      nodes: nodes.map((node) => node.id),
-      edges: edges.map((edge) => edge.id),
-    });
-  }, []);
+  const onSelectionChange = useCallback(
+    ({ nodes, edges }: OnSelectionChangeParams) => {
+      setSelectedElements({
+        nodes: nodes.map((node) => node.id),
+        edges: edges.map((edge) => edge.id),
+      });
+    },
+    []
+  );
 
   // Handle key presses for shortcuts
   const handleKeyDown = useCallback(
-    (event) => {
+    (event: KeyboardEvent) => {
       // Delete selected elements with Delete key
       if (event.key === "Delete" || event.key === "Backspace") {
         if (
@@ -271,8 +309,8 @@ const FlowCanvas = () => {
     }
 
     setTimeout(() => {
-      const reactFlowInstance =
-        document.querySelector(".react-flow")?.reactFlowInstance;
+      const reactFlowInstance = (document.querySelector(".react-flow") as any)
+        ?.reactFlowInstance;
       if (
         reactFlowInstance &&
         typeof reactFlowInstance.fitView === "function"
@@ -349,8 +387,6 @@ const FlowCanvas = () => {
         setLayoutMode={setLayoutMode}
       />
 
-      {/* <Sidebar onAddNode={addNode} /> */}
-
       <div
         ref={canvasRef}
         className="h-[80vh] w-[70vw] bg-[#fdfdfd] rounded-xl shadow-md border border-gray-200 overflow-hidden m-5 relative"
@@ -384,8 +420,9 @@ const FlowCanvas = () => {
             <div className="flex gap-2">
               <button
                 onClick={() => {
-                  const reactFlowInstance =
-                    document.querySelector(".react-flow")?.reactFlowInstance;
+                  const reactFlowInstance = (
+                    document.querySelector(".react-flow") as any
+                  )?.reactFlowInstance;
                   if (
                     reactFlowInstance &&
                     typeof reactFlowInstance.fitView === "function"

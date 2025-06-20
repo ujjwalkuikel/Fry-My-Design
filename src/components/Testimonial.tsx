@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -42,6 +42,8 @@ export default function TestimonialsSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>(
     {
       loop: true,
@@ -73,6 +75,7 @@ export default function TestimonialsSection() {
 
   useEffect(() => {
     if (!instanceRef.current) return;
+
     const slider = instanceRef.current;
     let timeout: NodeJS.Timeout;
     let mouseOver = false;
@@ -88,20 +91,23 @@ export default function TestimonialsSection() {
 
     start();
 
-    const container = sliderRef.current;
-    container?.addEventListener("mouseover", () => {
+    const container = containerRef.current;
+    const handleMouseOver = () => {
       mouseOver = true;
       stop();
-    });
-    container?.addEventListener("mouseout", () => {
+    };
+    const handleMouseOut = () => {
       mouseOver = false;
       start();
-    });
+    };
+
+    container?.addEventListener("mouseover", handleMouseOver);
+    container?.addEventListener("mouseout", handleMouseOut);
 
     return () => {
       stop();
-      container?.removeEventListener("mouseover", () => (mouseOver = true));
-      container?.removeEventListener("mouseout", () => (mouseOver = false));
+      container?.removeEventListener("mouseover", handleMouseOver);
+      container?.removeEventListener("mouseout", handleMouseOut);
     };
   }, [instanceRef]);
 
@@ -134,7 +140,6 @@ export default function TestimonialsSection() {
   return (
     <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-zinc-900 relative">
       <div className="absolute left-20 bottom-20 w-80 h-80 bg-lime-500/10 rounded-full blur-3xl -z-10" />
-
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-lime-500 to-cyan-500 dark:from-lime-400 dark:to-cyan-400">
@@ -148,7 +153,13 @@ export default function TestimonialsSection() {
 
         <div className="relative">
           <div className="mx-12 sm:mx-16 lg:mx-20">
-            <div ref={sliderRef} className="keen-slider">
+            <div
+              ref={(node) => {
+                containerRef.current = node;
+                sliderRef(node); // attach keen-slider
+              }}
+              className="keen-slider"
+            >
               {testimonials.map((t, i) => (
                 <div key={i} className="keen-slider__slide">
                   <Card {...t} />
