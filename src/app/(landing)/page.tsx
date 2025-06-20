@@ -147,7 +147,7 @@ export default function Home() {
             </h2>
             <p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               SystemSloth gives you the tools, feedback, and practice that
-              static tutorials simply can't provide.
+              static tutorials simply can&rsquo;t provide.
             </p>
           </div>
 
@@ -229,8 +229,8 @@ export default function Home() {
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
                 Practice with real-world system design questions from top tech
-                company interviews. Prepare for the exact challenges you'll
-                face.
+                company interviews. Prepare for the exact challenges
+                you&rsquo;ll face.
               </p>
             </div>
 
@@ -262,7 +262,7 @@ export default function Home() {
                 Performance Scoring
               </h3>
               <p className="text-gray-600 dark:text-gray-400">
-                Get quantified scores on your design's scalability,
+                Get quantified scores on your design&rsquo;s scalability,
                 availability, resilience, and cost-efficiency. Track your
                 improvement over time.
               </p>
