@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "FryMyDesign",
+  title: "SystemSloth",
   description: "System design playground",
 };
 
@@ -13,9 +13,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <main className="min-h-screen bg-white text-black">
-          {children}
-        </main>
+        <main className="min-h-screen bg-white text-black">{children}</main>
       </body>
     </html>
   );

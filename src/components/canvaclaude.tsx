@@ -341,7 +341,15 @@ const FlowCanvas = () => {
 
   return (
     <div className="flex relative min-h-screen">
-      <Sidebar onAddNode={addNode} />
+      <Sidebar
+        onAddNode={addNode}
+        edgeStyle={edgeStyle}
+        setEdgeStyle={setEdgeStyle}
+        layoutMode={layoutMode}
+        setLayoutMode={setLayoutMode}
+      />
+
+      {/* <Sidebar onAddNode={addNode} /> */}
 
       <div
         ref={canvasRef}

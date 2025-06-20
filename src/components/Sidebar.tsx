@@ -35,7 +35,7 @@ const Sidebar = ({
 
       <h4 className="mt-3 font-semibold">🪡 Edge Curve</h4>
       <select
-        value={edgeStyle.type}
+        value={edgeStyle?.type ?? "default"}
         onChange={(e) =>
           setEdgeStyle((prev) => ({ ...prev, type: e.target.value }))
         }

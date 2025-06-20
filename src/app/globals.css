@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes border-glow {
+  0%, 100% { border-color: #22c55e; }
+  50% { border-color: #4ade80; }
+}
+.animate-border-glow {
+  animation: border-glow 2s infinite ease-in-out;
+}

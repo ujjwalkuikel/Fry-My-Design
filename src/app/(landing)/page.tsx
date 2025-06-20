@@ -5,33 +5,45 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import WaitlistSection from "@/components/WaitlistSection";
+import TestimonialsSection from "@/components/Testimonial";
+import HeroSection from "@/components/HeroSection";
+import PricingSection from "@/components/PricingSection";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("interview");
-
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
-    <div className="min-h-screen font-sans relative overflow-hidden transition-colors duration-300">
+    <div className="min-h-screen font-sans bg-white dark:bg-black transition-colors duration-300">
       <Head>
-        <title>FryMyDesign – AI System Design Coach</title>
+        <title>SystemSloth – AI System Design Coach</title>
         <meta
           name="description"
           content="Your AI-powered system design coach. Build, learn, and master system architecture like a senior engineer."
         />
       </Head>
 
-      {/* Background Mesh Grid */}
-      <div className="fixed inset-0 bg-[url('/grid-pattern.svg')] opacity-10 z-0" />
-
-      {/* Sticky Navbar */}
+      {/* Navbar */}
       <nav className="sticky top-0 z-50 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md border-b border-gray-200 dark:border-zinc-800 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <div className="text-lime-500 dark:text-lime-400 font-bold text-2xl">
-                Fry<span className="text-gray-800 dark:text-white">My</span>
-                Design
-              </div>
-            </div>
+          <div className="flex justify-between items-center h-20">
+            <Link
+              href="/"
+              className="flex items-center space-x-2 hover:opacity-90 transition"
+            >
+              <Image
+                src="/logo_nobg.png"
+                alt="SystemSloth Logo"
+                width={150}
+                height={150}
+              />
+              <span className="text-lime-500 dark:text-lime-400 font-bold text-2xl">
+                System
+                <span className="text-gray-800 dark:text-white">Sloth</span>
+              </span>
+            </Link>
+
+            {/* Desktop Nav */}
             <div className="hidden md:flex items-center space-x-6">
               <Link
                 href="#features"
@@ -51,21 +63,20 @@ export default function Home() {
               >
                 Pricing
               </Link>
-              <Link href="/login">
-                <button className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white border border-lime-500 hover:border-lime-400 px-4 py-2 rounded-lg transition-colors duration-200">
-                  Log In
-                </button>
+              <Link
+                href="#early-access"
+                className="bg-gradient-to-r from-lime-500 to-green-500 hover:from-lime-600 hover:to-green-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200"
+              >
+                Join Waitlist
               </Link>
-              <Link href="/signup">
-                <button className="bg-lime-500 hover:bg-lime-400 text-black font-semibold px-4 py-2 rounded-lg transition-colors duration-200">
-                  Sign Up Free
-                </button>
-              </Link>
-              <ThemeToggle />
             </div>
+
+            {/* Mobile Menu Button */}
             <div className="md:hidden">
-              {/* Mobile menu button */}
-              <button className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white p-2">
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white p-2"
+              >
                 <svg
                   className="h-6 w-6"
                   fill="none"
@@ -83,121 +94,47 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* Mobile Dropdown Menu */}
+        {isMenuOpen && (
+          <div className="absolute top-20 left-0 right-0 bg-white dark:bg-zinc-900 border-t border-gray-200 dark:border-zinc-800 shadow-md z-40 px-6 py-4 space-y-4 md:hidden">
+            <Link
+              href="#features"
+              className="block text-gray-600 dark:text-gray-300 hover:text-lime-500 dark:hover:text-lime-400 transition-colors duration-200"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Features
+            </Link>
+            <Link
+              href="#how-it-works"
+              className="block text-gray-600 dark:text-gray-300 hover:text-lime-500 dark:hover:text-lime-400 transition-colors duration-200"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              How It Works
+            </Link>
+            <Link
+              href="#pricing"
+              className="block text-gray-600 dark:text-gray-300 hover:text-lime-500 dark:hover:text-lime-400 transition-colors duration-200"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Pricing
+            </Link>
+            <Link
+              href="#early-access"
+              className="block bg-gradient-to-r from-lime-500 to-green-500 hover:from-lime-600 hover:to-green-600 text-white text-center px-4 py-3 rounded-lg font-semibold transition-all duration-200"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Join Waitlist
+            </Link>
+          </div>
+        )}
       </nav>
+
       {/* Hero Section */}
-      <section className="relative pt-16 pb-24 sm:pt-24 overflow-hidden">
-        {/* Glow Effects */}
-        <div className="absolute top-20 left-20 w-64 h-64 bg-lime-500/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl" />
+      <HeroSection />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="flex-1 text-center lg:text-left">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-500 to-cyan-500 dark:from-lime-400 dark:to-cyan-400">
-                  From Potato to Pro
-                </span>
-                <br />
-                Design Like a Senior Engineer
-              </h1>
-              <p className="mt-6 text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto lg:mx-0">
-                Master system design with interactive, AI-powered feedback.
-                Build architecture diagrams that would impress FAANG
-                interviewers.
-              </p>
-              <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link href="/canvas">
-                  <button className="bg-gradient-to-r from-lime-500 to-green-500 hover:from-lime-400 hover:to-green-400 text-black font-semibold px-8 py-4 rounded-xl text-lg shadow-lg shadow-lime-500/20">
-                    Start Designing Free
-                  </button>
-                </Link>
-                <Link href="#how-it-works">
-                  <button className="bg-gray-100 hover:bg-gray-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 border border-gray-200 dark:border-zinc-700 px-8 py-4 rounded-xl text-lg flex items-center gap-2">
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                    See How It Works
-                  </button>
-                </Link>
-              </div>
-            </div>
-            <div className="flex-1 mt-10 lg:mt-0 max-w-lg lg:max-w-xl mx-auto relative">
-              {/* Decorative glow behind the mockup */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-lime-500/20 via-cyan-500/20 to-purple-500/20 blur-2xl rounded-xl transform scale-110" />
-
-              <div className="relative bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-2xl shadow-lime-900/20 overflow-hidden">
-                <div className="h-8 bg-gray-100 dark:bg-zinc-800 border-b border-gray-200 dark:border-zinc-700 flex items-center px-4">
-                  <div className="flex space-x-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                    <div className="w-3 h-3 rounded-full bg-green-500" />
-                  </div>
-                </div>
-                <Image
-                  src="/system-design-mockup.png"
-                  alt="FryMyDesign Interface"
-                  width={800}
-                  height={500}
-                  className="w-full"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Social Proof Section */}
-      <section className="bg-gray-100/50 dark:bg-zinc-800/50 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-x-16 gap-y-8 opacity-70 grayscale hover:grayscale-0 transition-all">
-            <span className="text-xl font-semibold">
-              Used by engineers from:
-            </span>
-            <Image
-              src="/logo-google.svg"
-              alt="Google"
-              width={120}
-              height={36}
-            />
-            <Image src="/logo-meta.svg" alt="Meta" width={120} height={36} />
-            <Image
-              src="/logo-amazon.svg"
-              alt="Amazon"
-              width={120}
-              height={36}
-            />
-            <Image
-              src="/logo-microsoft.svg"
-              alt="Microsoft"
-              width={120}
-              height={36}
-            />
-            <Image
-              src="/logo-netflix.svg"
-              alt="Netflix"
-              width={120}
-              height={36}
-            />
-          </div>
-        </div>
-      </section>
+      {/* Waitlist Section (Handled by waitlistSection components*/}
+      <WaitlistSection />
 
       {/* Features Section */}
       <section id="features" className="py-24 relative">
@@ -209,7 +146,7 @@ export default function Home() {
               Master System Design Like Never Before
             </h2>
             <p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              FryMyDesign gives you the tools, feedback, and practice that
+              SystemSloth gives you the tools, feedback, and practice that
               static tutorials simply can't provide.
             </p>
           </div>
@@ -384,6 +321,44 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* Social Proof Section */}
+      <section className="bg-gray-100/50 dark:bg-zinc-800/50 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap sm:justify-center gap-y-6 sm:gap-x-12 items-center text-center opacity-70 grayscale hover:grayscale-0 transition-all">
+            <span className="text-lg sm:text-xl font-semibold mb-2 sm:mb-0">
+              Used by engineers from:
+            </span>
+
+            <div className="flex flex-wrap justify-center gap-6 sm:gap-x-10 items-center">
+              <Image
+                src="/logo-google.svg"
+                alt="Google"
+                width={120}
+                height={36}
+              />
+              <Image src="/logo-meta.svg" alt="Meta" width={120} height={36} />
+              <Image
+                src="/logo-amazon.svg"
+                alt="Amazon"
+                width={120}
+                height={36}
+              />
+              <Image
+                src="/logo-microsoft.svg"
+                alt="Microsoft"
+                width={120}
+                height={36}
+              />
+              <Image
+                src="/logo-netflix.svg"
+                alt="Netflix"
+                width={120}
+                height={36}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* How It Works Section */}
       <section
@@ -396,7 +371,7 @@ export default function Home() {
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-500 to-cyan-500 dark:from-lime-400 dark:to-cyan-400">
-                How FryMyDesign Works
+                How SystemSloth Works
               </span>
             </h2>
             <p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
@@ -407,7 +382,7 @@ export default function Home() {
 
           <div className="flex flex-col lg:flex-row items-center gap-8 mb-20">
             <div className="flex-1 lg:order-2">
-              <div className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl overflow-hidden shadow-xl">
+              <div className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-xl">
                 <div className="flex border-b border-gray-200 dark:border-zinc-700">
                   <button
                     className={`flex-1 py-4 text-center ${
@@ -441,7 +416,7 @@ export default function Home() {
                   </button>
                 </div>
 
-                <div className="p-4 h-80 overflow-hidden">
+                <div className="p-4 h-80  ">
                   {activeTab === "interview" && (
                     <div className="h-full flex flex-col">
                       <h3 className="text-xl font-semibold mb-4">
@@ -459,13 +434,6 @@ export default function Home() {
                             destination
                           </li>
                           <li>Links should expire after a default timespan</li>
-                          <li>
-                            System should handle high traffic (millions of
-                            redirects)
-                          </li>
-                          <li>
-                            Analytics for link clicks would be a bonus feature
-                          </li>
                         </ul>
                       </div>
                     </div>
@@ -511,7 +479,7 @@ export default function Home() {
                         </div>
                         <span className="font-semibold">AI Design Coach</span>
                       </div>
-                      <div className="space-y-3 text-gray-700 dark:text-gray-300 text-sm bg-gray-50/50 dark:bg-zinc-900/50 p-4 rounded-lg">
+                      <div className="space-y-1 text-gray-700 dark:text-gray-300 text-sm bg-gray-50/50 dark:bg-zinc-900/50 p-4 rounded-lg">
                         <p>
                           <span className="text-yellow-500 dark:text-yellow-400">
                             ⚠️ Scalability concern:
@@ -544,67 +512,51 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="flex-1 lg:order-1 text-center lg:text-left">
-              <h3 className="text-2xl font-semibold mb-4 text-black dark:text-white">
+            {/* Step Text */}
+            <div className="w-full lg:w-1/2 order-1 lg:order-1 text-center lg:text-left">
+              <h3 className="text-2xl font-semibold mb-6 text-black dark:text-white">
                 Build, Review, Improve
               </h3>
+
               <div className="space-y-8">
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-lime-500 text-black rounded-full flex items-center justify-center font-bold flex-shrink-0 mt-1">
-                    1
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="flex items-start gap-4">
+                    <div className="w-8 h-8 bg-lime-500 text-black rounded-full flex items-center justify-center font-bold mt-1 flex-shrink-0">
+                      {i + 1}
+                    </div>
+                    <div className="text-left">
+                      <h4 className="font-semibold text-lg text-black dark:text-white">
+                        {
+                          [
+                            "Select an Interview Question",
+                            "Design Your Solution",
+                            "Get AI Feedback",
+                          ][i]
+                        }
+                      </h4>
+                      <p className="text-gray-600 dark:text-gray-400 mt-2 text-sm sm:text-base">
+                        {
+                          [
+                            "Choose from our library of real FAANG system design prompts or create your own custom challenge.",
+                            "Use our drag-and-drop editor with pre-built components to visually create your system architecture.",
+                            "Receive instant, specific feedback on scalability, bottlenecks, and best practices from our AI coach.",
+                          ][i]
+                        }
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-lg text-black dark:text-white">
-                      Select an Interview Question
-                    </h4>
-                    <p className="text-gray-600 dark:text-gray-400 mt-2">
-                      Choose from our library of real FAANG system design
-                      prompts or create your own custom challenge.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-lime-500 text-black rounded-full flex items-center justify-center font-bold flex-shrink-0 mt-1">
-                    2
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-lg text-black dark:text-white">
-                      Design Your Solution
-                    </h4>
-                    <p className="text-gray-600 dark:text-gray-400 mt-2">
-                      Use our drag-and-drop editor with pre-built components to
-                      visually create your system architecture.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-lime-500 text-black rounded-full flex items-center justify-center font-bold flex-shrink-0 mt-1">
-                    3
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-lg text-black dark:text-white">
-                      Get AI Feedback
-                    </h4>
-                    <p className="text-gray-600 dark:text-gray-400 mt-2">
-                      Receive instant, specific feedback on scalability,
-                      bottlenecks, and best practices from our AI coach.
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
 
-              <div className="mt-10">
+              <div className="mt-8">
                 <Link href="/signup">
-                  <button className="bg-lime-500 hover:bg-lime-400 text-black font-semibold px-6 py-3 rounded-xl inline-flex items-center gap-2">
+                  <button className="bg-lime-500 hover:bg-lime-400 text-black font-semibold px-6 py-3 rounded-xl inline-flex items-center gap-2 text-sm sm:text-base">
                     Try It For Free
                     <svg
                       className="w-4 h-4"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
                         strokeLinecap="round"
@@ -622,451 +574,30 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-24 bg-white dark:bg-zinc-900 relative">
-        <div className="absolute left-20 bottom-20 w-80 h-80 bg-lime-500/10 rounded-full blur-3xl -z-10" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-lime-500 to-cyan-500 dark:from-lime-400 dark:to-cyan-400">
-              What Engineers Are Saying
-            </h2>
-            <p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Join thousands of developers who've leveled up their system design
-              skills with FryMyDesign.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Testimonial 1 */}
-            <div className="bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gray-300 dark:bg-zinc-700 rounded-full overflow-hidden mr-4">
-                  {/* Profile image would go here */}
-                </div>
-                <div>
-                  <h4 className="font-semibold text-black dark:text-white">
-                    Sarah K.
-                  </h4>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">
-                    Senior Backend Engineer, Ex-Google
-                  </p>
-                </div>
-              </div>
-              <p className="text-gray-600 dark:text-gray-300">
-                "FryMyDesign helped me ace my system design interview at a FAANG
-                company. The AI feedback pointed out scalability issues I
-                completely missed!"
-              </p>
-              <div className="mt-4 flex text-yellow-500">
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-              </div>
-            </div>
-
-            {/* Testimonial 2 */}
-            <div className="bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gray-300 dark:bg-zinc-700 rounded-full overflow-hidden mr-4">
-                  {/* Profile image would go here */}
-                </div>
-                <div>
-                  <h4 className="font-semibold text-black dark:text-white">
-                    Michael T.
-                  </h4>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">
-                    Staff Engineer, Fintech Startup
-                  </p>
-                </div>
-              </div>
-              <p className="text-gray-600 dark:text-gray-300">
-                "I use this tool with my team for architectural planning
-                meetings. The visual components make it easy to communicate
-                complex ideas quickly."
-              </p>
-              <div className="mt-4 flex text-yellow-500">
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-              </div>
-            </div>
-
-            {/* Testimonial 3 */}
-            <div className="bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl p-6 hover:shadow-lg transition-shadow">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gray-300 dark:bg-zinc-700 rounded-full overflow-hidden mr-4">
-                  {/* Profile image would go here */}
-                </div>
-                <div>
-                  <h4 className="font-semibold text-black dark:text-white">
-                    David L.
-                  </h4>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">
-                    Principal Engineer, E-commerce Platform
-                  </p>
-                </div>
-              </div>
-              <p className="text-gray-600 dark:text-gray-300">
-                "After years of struggling with whiteboard system design, this
-                tool finally made the concepts click. Now I teach my junior
-                engineers using FryMyDesign."
-              </p>
-              <div className="mt-4 flex text-yellow-500">
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <TestimonialsSection />
 
       {/* Pricing Section */}
-      <section
-        id="pricing"
-        className="py-24 bg-gray-50 dark:bg-zinc-900/50 relative"
-      >
-        <div className="absolute right-10 top-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl -z-10" />
+      <PricingSection />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-lime-500 to-cyan-500 dark:from-lime-400 dark:to-cyan-400">
-              Simple, Transparent Pricing
-            </h2>
-            <p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Start for free, upgrade when you're ready. No hidden fees.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Free Plan */}
-            <div className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl p-8 hover:shadow-lg transition-shadow">
-              <h3 className="text-xl font-semibold mb-2 text-black dark:text-white">
-                Free
-              </h3>
-              <div className="mb-6">
-                <span className="text-4xl font-bold text-black dark:text-white">
-                  $0
-                </span>
-                <span className="text-gray-500 dark:text-gray-400">/month</span>
-              </div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center text-gray-600 dark:text-gray-300">
-                  <svg
-                    className="w-5 h-5 mr-2 text-lime-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
-                  Basic design components
-                </li>
-                <li className="flex items-center text-gray-600 dark:text-gray-300">
-                  <svg
-                    className="w-5 h-5 mr-2 text-lime-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
-                  5 design saves
-                </li>
-                <li className="flex items-center text-gray-600 dark:text-gray-300">
-                  <svg
-                    className="w-5 h-5 mr-2 text-lime-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
-                  Basic AI feedback
-                </li>
-                <li className="flex items-center text-gray-600 dark:text-gray-300">
-                  <svg
-                    className="w-5 h-5 mr-2 text-lime-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
-                  PNG exports
-                </li>
-              </ul>
-              <Link href="/signup">
-                <button className="w-full bg-gray-100 hover:bg-gray-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-gray-800 dark:text-white font-semibold px-4 py-3 rounded-lg transition-colors duration-200">
-                  Get Started
-                </button>
-              </Link>
-            </div>
-
-            {/* Pro Plan */}
-            <div className="bg-white dark:bg-zinc-800 border-2 border-lime-500 rounded-xl p-8 hover:shadow-lg transition-shadow transform scale-105">
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-lime-500 text-black px-4 py-1 rounded-full text-sm font-semibold">
-                MOST POPULAR
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-black dark:text-white">
-                Pro
-              </h3>
-              <div className="mb-6">
-                <span className="text-4xl font-bold text-black dark:text-white">
-                  $19
-                </span>
-                <span className="text-gray-500 dark:text-gray-400">/month</span>
-              </div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center text-gray-600 dark:text-gray-300">
-                  <svg
-                    className="w-5 h-5 mr-2 text-lime-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
-                  All design components
-                </li>
-                <li className="flex items-center text-gray-600 dark:text-gray-300">
-                  <svg
-                    className="w-5 h-5 mr-2 text-lime-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
-                  Unlimited design saves
-                </li>
-                <li className="flex items-center text-gray-600 dark:text-gray-300">
-                  <svg
-                    className="w-5 h-5 mr-2 text-lime-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
-                  Advanced AI feedback
-                </li>
-                <li className="flex items-center text-gray-600 dark:text-gray-300">
-                  <svg
-                    className="w-5 h-5 mr-2 text-lime-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
-                  PDF & SVG exports
-                </li>
-                <li className="flex items-center text-gray-600 dark:text-gray-300">
-                  <svg
-                    className="w-5 h-5 mr-2 text-lime-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
-                  Premium interview questions
-                </li>
-              </ul>
-              <Link href="/signup">
-                <button className="w-full bg-gradient-to-r from-lime-500 to-green-500 hover:from-lime-400 hover:to-green-400 text-black font-semibold px-4 py-3 rounded-lg transition-colors duration-200">
-                  Start Pro Trial
-                </button>
-              </Link>
-            </div>
-
-            {/* Team Plan */}
-            <div className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl p-8 hover:shadow-lg transition-shadow">
-              <h3 className="text-xl font-semibold mb-2 text-black dark:text-white">
-                Team
-              </h3>
-              <div className="mb-6">
-                <span className="text-4xl font-bold text-black dark:text-white">
-                  $49
-                </span>
-                <span className="text-gray-500 dark:text-gray-400">/month</span>
-              </div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-center text-gray-600 dark:text-gray-300">
-                  <svg
-                    className="w-5 h-5 mr-2 text-lime-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
-                  Everything in Pro
-                </li>
-                <li className="flex items-center text-gray-600 dark:text-gray-300">
-                  <svg
-                    className="w-5 h-5 mr-2 text-lime-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
-                  5 team members
-                </li>
-                <li className="flex items-center text-gray-600 dark:text-gray-300">
-                  <svg
-                    className="w-5 h-5 mr-2 text-lime-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
-                  Collaborative design
-                </li>
-                <li className="flex items-center text-gray-600 dark:text-gray-300">
-                  <svg
-                    className="w-5 h-5 mr-2 text-lime-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
-                  Team library & templates
-                </li>
-                <li className="flex items-center text-gray-600 dark:text-gray-300">
-                  <svg
-                    className="w-5 h-5 mr-2 text-lime-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
-                  Priority support
-                </li>
-              </ul>
-              <Link href="/contact">
-                <button className="w-full bg-gray-100 hover:bg-gray-200 dark:bg-zinc-700 dark:hover:bg-zinc-600 text-gray-800 dark:text-white font-semibold px-4 py-3 rounded-lg transition-colors duration-200">
-                  Contact Sales
-                </button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-r from-lime-500 to-green-600 dark:from-lime-600 dark:to-green-700 text-black">
+      <section className="py-16 sm:py-20 md:py-24 bg-gradient-to-r from-lime-500 to-green-600 dark:from-lime-600 dark:to-green-700 text-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">
             Ready to level up your system design skills?
           </h2>
-          <p className="text-xl mb-10 opacity-90 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl mb-8 sm:mb-10 opacity-90 max-w-2xl mx-auto">
             Join thousands of engineers who are building better systems and
-            acing interviews with FryMyDesign.
+            acing interviews with SystemSloth.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
             <Link href="/signup">
-              <button className="bg-black hover:bg-gray-800 text-white font-semibold px-8 py-4 rounded-xl text-lg shadow-lg">
+              <button className="w-full sm:w-auto bg-black hover:bg-gray-800 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-base sm:text-lg shadow-lg transition">
                 Start Designing Free
               </button>
             </Link>
+
             <Link href="/demo">
-              <button className="bg-white/20 hover:bg-white/30 backdrop-blur-sm text-black font-semibold px-8 py-4 rounded-xl text-lg flex items-center justify-center gap-2">
+              <button className="w-full sm:w-auto bg-white/20 hover:bg-white/30 backdrop-blur-sm text-black font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-base sm:text-lg flex items-center justify-center gap-2 transition">
                 <svg
                   className="w-5 h-5"
                   fill="none"
@@ -1079,13 +610,13 @@ export default function Home() {
                     strokeLinejoin="round"
                     strokeWidth="2"
                     d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                  ></path>
+                  />
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="2"
                     d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  ></path>
+                  />
                 </svg>
                 Watch Demo
               </button>
@@ -1100,8 +631,8 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
             <div className="col-span-2">
               <div className="text-lime-500 dark:text-lime-400 font-bold text-2xl mb-4">
-                Fry<span className="text-gray-800 dark:text-white">My</span>
-                Design
+                System
+                <span className="text-gray-800 dark:text-white">Sloth</span>
               </div>
               <p className="text-gray-600 dark:text-gray-400 mb-4 max-w-xs">
                 An AI-powered system design coach that helps engineers create
@@ -1235,46 +766,6 @@ export default function Home() {
                     href="#"
                     className="text-gray-600 hover:text-lime-500 dark:text-gray-400 dark:hover:text-lime-400"
                   >
-                    System Design Guide
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
-                Company
-              </h3>
-              <ul className="space-y-2">
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-600 hover:text-lime-500 dark:text-gray-400 dark:hover:text-lime-400"
-                  >
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-600 hover:text-lime-500 dark:text-gray-400 dark:hover:text-lime-400"
-                  >
-                    Careers
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-600 hover:text-lime-500 dark:text-gray-400 dark:hover:text-lime-400"
-                  >
-                    Contact
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-gray-600 hover:text-lime-500 dark:text-gray-400 dark:hover:text-lime-400"
-                  >
                     Privacy Policy
                   </a>
                 </li>
@@ -1284,7 +775,7 @@ export default function Home() {
 
           <div className="mt-12 pt-8 border-t border-gray-200 dark:border-zinc-800 flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-500 dark:text-gray-400">
-              &copy; {new Date().getFullYear()} FryMyDesign. All rights
+              &copy; {new Date().getFullYear()} SystemSloth. All rights
               reserved.
             </p>
             <div className="mt-4 md:mt-0 flex items-center">
