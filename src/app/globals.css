@@ -9,3 +9,11 @@
 .animate-border-glow {
   animation: border-glow 2s infinite ease-in-out;
 }
+
+
+html,
+body {
+  overflow-x: clip; /* use clip instead of hidden so sticky still works properly */
+}
+
+

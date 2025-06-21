@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 
 export default function WaitlistSection() {
@@ -27,14 +29,18 @@ export default function WaitlistSection() {
   return (
     <section
       id="early-access"
-      className="bg-gradient-to-br from-zinc-900 via-black to-zinc-900 py-16 px-4 sm:px-6 lg:px-8 text-center"
+      className="scroll-mt-24 bg-zinc-100 dark:bg-gradient-to-br dark:from-zinc-900 dark:via-black dark:to-zinc-900 py-16 px-4 sm:px-6 lg:px-8 text-center transition-colors duration-300"
     >
-      <h2 className="text-3xl font-bold text-white mb-6">
-        Be the First to Get Access
-      </h2>
-      <p className="text-lg text-gray-400 mb-8">
-        Join 8,000+ engineers who are already leveling up with SystemSloth.
-      </p>
+      <div className="text-center mb-12 sm:mb-16">
+        <h2 className="text-3xl sm:text-4xl font-bold">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-500 to-cyan-500 dark:from-lime-400 dark:to-cyan-400">
+            Be the First to Get Access
+          </span>
+        </h2>
+        <p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          Join 8,000+ engineers who are already leveling up with SystemSloth.
+        </p>
+      </div>
 
       {!submitted ? (
         <form
@@ -46,7 +52,7 @@ export default function WaitlistSection() {
             type="email"
             required
             placeholder="Enter your email"
-            className="w-full sm:w-72 px-4 py-3 rounded-lg border border-gray-600 bg-zinc-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-lime-500 focus:outline-none"
+            className="w-full sm:w-72 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-zinc-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-lime-500 focus:outline-none transition-all"
           />
           <button
             type="submit"
@@ -56,7 +62,7 @@ export default function WaitlistSection() {
           </button>
         </form>
       ) : (
-        <p className="text-green-400 font-medium text-lg">
+        <p className="text-green-600 dark:text-green-400 font-medium text-lg">
           🎉 You’ve been added to the waitlist!
         </p>
       )}

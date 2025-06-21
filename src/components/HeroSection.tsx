@@ -3,9 +3,9 @@ import Link from "next/link";
 
 export default function HeroSection() {
   return (
-    <section className="relative pt-16 pb-24 sm:pt-24">
+    <section className="relative pt-16 pb-24 sm:pt-24 overflow-hidden">
       {/* Glow Effects */}
-      <div className="pointer-events-none absolute bottom-10 right-10 w-[400px] h-[400px] bg-purple-600/20 rounded-full blur-3xl z-0" />
+      <div className="pointer-events-none absolute bottom-10 right-0 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px] bg-purple-600/20 rounded-full blur-3xl z-0" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
         <div className="flex flex-col lg:flex-row items-center gap-12">
@@ -87,7 +87,7 @@ export default function HeroSection() {
 
           {/* Right Image - Mobile Optimized */}
           <div className="flex-1 mt-8 lg:mt-0 w-full max-w-xs sm:max-w-md lg:max-w-xl mx-auto relative">
-            <div className="absolute inset-0 bg-gradient-to-tr from-lime-500/20 via-cyan-500/20 to-purple-500/20 blur-2xl rounded-xl transform scale-110" />
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-tr from-lime-500/20 via-cyan-500/20 to-purple-500/20 blur-2xl rounded-xl overflow-hidden scale-100 sm:scale-105 md:scale-110" />
             <div className="relative bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl shadow-2xl shadow-lime-900/20">
               <div className="h-6 sm:h-8 bg-gray-100 dark:bg-zinc-800 border-b border-gray-200 dark:border-zinc-700 flex items-center px-3 sm:px-4">
                 <div className="flex space-x-1.5 sm:space-x-2">

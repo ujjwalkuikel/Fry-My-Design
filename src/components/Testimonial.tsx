@@ -138,14 +138,16 @@ export default function TestimonialsSection() {
   );
 
   return (
-    <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-zinc-900 relative">
+    <section className="py-8 sm:py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-zinc-900 relative">
       <div className="absolute left-20 bottom-20 w-80 h-80 bg-lime-500/10 rounded-full blur-3xl -z-10" />
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-lime-500 to-cyan-500 dark:from-lime-400 dark:to-cyan-400">
-            What Engineers Are Saying
+          <h2 className="text-3xl sm:text-4xl font-bold">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-500 to-cyan-500 dark:from-lime-400 dark:to-cyan-400">
+              What Engineers Are Saying
+            </span>
           </h2>
-          <p className="mt-3 sm:mt-4 text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto px-4 sm:px-0">
+          <p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Join thousands of developers who've leveled up their system design
             skills with SystemSloth.
           </p>

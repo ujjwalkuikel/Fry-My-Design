@@ -1,5 +1,5 @@
 "use client";
-// pages/index.tsx
+// app/(landing)/page.tsx
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +9,7 @@ import WaitlistSection from "@/components/WaitlistSection";
 import TestimonialsSection from "@/components/Testimonial";
 import HeroSection from "@/components/HeroSection";
 import PricingSection from "@/components/PricingSection";
+import TrustedByLogos from "@/components/TrustedByLogos";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("interview");
@@ -25,7 +26,7 @@ export default function Home() {
 
       {/* Navbar */}
       <nav className="sticky top-0 z-50 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md border-b border-gray-200 dark:border-zinc-800 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <Link
               href="/"
@@ -36,8 +37,9 @@ export default function Home() {
                 alt="SystemSloth Logo"
                 width={150}
                 height={150}
+                className="w-[100px] h-[100px] md:w-[150px] md:h-[150px]"
               />
-              <span className="text-lime-500 dark:text-lime-400 font-bold text-2xl">
+              <span className="text-lime-500 dark:text-lime-400 font-bold text-2xl hidden sm:inline">
                 System
                 <span className="text-gray-800 dark:text-white">Sloth</span>
               </span>
@@ -137,13 +139,18 @@ export default function Home() {
       <WaitlistSection />
 
       {/* Features Section */}
-      <section id="features" className="py-24 relative">
-        <div className="absolute left-1/2 top-1/3 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl -z-10" />
+      <section
+        id="features"
+        className="py-16 sm:py-24 relative overflow-hidden"
+      >
+        <div className="absolute left-1/2 top-1/3 w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-blue-600/10 rounded-full blur-3xl -z-10" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-lime-500 via-cyan-500 to-purple-500 dark:from-lime-400 dark:via-cyan-400 dark:to-purple-400">
-              Master System Design Like Never Before
+            <h2 className="text-3xl sm:text-4xl font-bold">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-500 to-cyan-500 dark:from-lime-400 dark:to-cyan-400">
+                Master System Design Like Never Before
+              </span>
             </h2>
             <p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               SystemSloth gives you the tools, feedback, and practice that
@@ -322,48 +329,13 @@ export default function Home() {
         </div>
       </section>
       {/* Social Proof Section */}
-      <section className="bg-gray-100/50 dark:bg-zinc-800/50 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row sm:flex-wrap sm:justify-center gap-y-6 sm:gap-x-12 items-center text-center opacity-70 grayscale hover:grayscale-0 transition-all">
-            <span className="text-lg sm:text-xl font-semibold mb-2 sm:mb-0">
-              Used by engineers from:
-            </span>
 
-            <div className="flex flex-wrap justify-center gap-6 sm:gap-x-10 items-center">
-              <Image
-                src="/logo-google.svg"
-                alt="Google"
-                width={120}
-                height={36}
-              />
-              <Image src="/logo-meta.svg" alt="Meta" width={120} height={36} />
-              <Image
-                src="/logo-amazon.svg"
-                alt="Amazon"
-                width={120}
-                height={36}
-              />
-              <Image
-                src="/logo-microsoft.svg"
-                alt="Microsoft"
-                width={120}
-                height={36}
-              />
-              <Image
-                src="/logo-netflix.svg"
-                alt="Netflix"
-                width={120}
-                height={36}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      <TrustedByLogos />
 
       {/* How It Works Section */}
       <section
         id="how-it-works"
-        className="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-zinc-900 dark:to-black relative"
+        className="py-0 sm:py-24 bg-gradient-to-b from-gray-50 to-white dark:from-zinc-900 dark:to-black relative"
       >
         <div className="absolute right-0 top-20 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl -z-10" />
 
@@ -579,7 +551,7 @@ export default function Home() {
       {/* Pricing Section */}
       <PricingSection />
 
-      <section className="py-16 sm:py-20 md:py-24 bg-gradient-to-r from-lime-500 to-green-600 dark:from-lime-600 dark:to-green-700 text-black">
+      <section className="py-0 sm:py-20 md:py-24 bg-gradient-to-r from-lime-500 to-green-600 dark:from-lime-600 dark:to-green-700 text-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">
             Ready to level up your system design skills?
@@ -590,13 +562,13 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-            <Link href="/signup">
+            <Link href="#early-access">
               <button className="w-full sm:w-auto bg-black hover:bg-gray-800 text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-base sm:text-lg shadow-lg transition">
                 Start Designing Free
               </button>
             </Link>
 
-            <Link href="/demo">
+            <Link href="#">
               <button className="w-full sm:w-auto bg-white/20 hover:bg-white/30 backdrop-blur-sm text-black font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-base sm:text-lg flex items-center justify-center gap-2 transition">
                 <svg
                   className="w-5 h-5"
